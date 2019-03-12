@@ -18,6 +18,13 @@ public class SCC{
     public static void main(String[] args){
 
         // Please Enter Your Code Here
+        
+        // ArrayList 초기 생성
+        for(int i=0; i<=numN; i++){
+            arr[i] = new ArrayList<Integer>();
+            reverseArr[i] = new ArrayList<Integer>();
+        }
+
         for(int i=0; i<numM; i++){
             int numA = scan.nextInt();
             int numB = scan.nextInt();
