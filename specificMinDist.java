@@ -7,8 +7,8 @@ public class specificMinDist {
     public static int numM = scan.nextInt();
     public static ArrayList<Integer> arr[] = new ArrayList[1010];
     public static ArrayList<Integer> cost[] = new ArrayList[1010];
-    public static int[] minDistToA = new int[1010];
-    public static int[] minDistToB = new int[1010];
+    public static int[] minDistFromStart = new int[1010];
+    public static int[] minDistFromA = new int[1010];
     public static int[] minDistToEnd = new int[1010];
     public static boolean[] checkToA = new boolean[1010];
     public static boolean[] checkToB = new boolean[1010];
@@ -42,20 +42,21 @@ public class specificMinDist {
         int nodeB = scan.nextInt();
 
         for(int i=0; i<=numN; i++){
-            minDistToA[i] = 987987987;
-            minDistToB[i] = 987987987;
+            minDistFromStart[i] = 987987987;
+            minDistFromA[i] = 987987987;
             minDistToEnd[i] = 987987987;
         }
 
-        minDistToA[1] = 0;
-        int result = 0;
+        minDistFromStart[1] = 0;
+        int resultAtoB = 0;
+        int resultBtoA = 0;
 
         for(int i=1; i<=numN; i++){
             int minValue = 987987987;
             int minIndex = -1;
             for(int j=1; j<=numN; j++){
-                if(checkToA[j] == false && minValue > minDistToA[j]){
-                    minValue = minDistToA[j];
+                if(checkToA[j] == false && minValue > minDistFromStart[j]){
+                    minValue = minDistFromStart[j];
                     minIndex = j;
                 }
             }
@@ -65,23 +66,24 @@ public class specificMinDist {
                 int node2 = arr[minIndex].get(j);
                 int cost2 = cost[minIndex].get(j);
 
-                if(minDistToA[node2] > minDistToA[minIndex]+cost2){
-                    minDistToA[node2] = minDistToA[minIndex]+cost2;
+                if(minDistFromStart[node2] > minDistFromStart[minIndex]+cost2){
+                    minDistFromStart[node2] = minDistFromStart[minIndex]+cost2;
                 }
             }
         }
 
-        result += minDistToA[nodeA];
+        resultAtoB += minDistFromStart[nodeA];
+        resultBtoA += minDistFromStart[nodeB];
 
-        minDistToB[nodeA] = 0;
+        minDistFromA[nodeA] = 0;
 
         for(int i=1; i<=numN; i++){
             int minValue = 987987987;
             int minIndex = -1;
 
             for(int j=1; j<=numN; j++){
-                if(checkToB[j] == false && minValue > minDistToB[j]){
-                    minValue = minDistToB[j];
+                if(checkToB[j] == false && minValue > minDistFromA[j]){
+                    minValue = minDistFromA[j];
                     minIndex = j;
                 }
             }
@@ -92,14 +94,15 @@ public class specificMinDist {
                 int node2 = arr[minIndex].get(j);
                 int cost2 = cost[minIndex].get(j);
 
-                if(minDistToB[node2] > minDistToB[minIndex]+cost2){
-                    minDistToB[node2] = minDistToB[minIndex]+cost2;
+                if(minDistFromA[node2] > minDistFromA[minIndex]+cost2){
+                    minDistFromA[node2] = minDistFromA[minIndex]+cost2;
                 }
 
             }
         }
 
-        result += minDistToB[nodeB];
+        resultAtoB += minDistFromA[nodeB];
+        resultBtoA += minDistFromA[nodeB];
 
         minDistToEnd[nodeB] = 0;
 
@@ -126,8 +129,13 @@ public class specificMinDist {
             }
         }
 
-        result += minDistToEnd[numN];
+        resultAtoB += minDistToEnd[numN];
+        resultBtoA += minDistFromA[numN];
 
-        System.out.println(result);
+        if(resultAtoB > resultBtoA){
+            System.out.println(resultBtoA);
+        }else{
+            System.out.println(resultAtoB);
+        }
     }
 }
