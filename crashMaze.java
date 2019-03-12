@@ -11,11 +11,6 @@ public class crashMaze{
         Queue<Point> que = new LinkedList<>();
         Point[][] pointFromStart = new Point[numN][numM];
         Point[][] pointFromEnd = new Point[numN][numM];
-        for(int i=0; i<numN+2; i++){
-            for(int j=0; j<numM+2; j++){
-                arr[i][j] = 1;
-            }
-        }
 
         for(int i=0; i<numN; i++){
             for(int j=0; j<numM; j++){
@@ -132,7 +127,7 @@ public class crashMaze{
                     if(pointFromEnd[nowPoint.x][nowPoint.y-1].dist > nowPoint.dist+1){
                         pointFromEnd[nowPoint.x][nowPoint.y-1].dist = nowPoint.dist+1;
                     }
-                    pointFromEnd[nowPoint.y][nowPoint.y-1].visited = true;
+                    pointFromEnd[nowPoint.x][nowPoint.y-1].visited = true;
                     que2.add(pointFromEnd[nowPoint.x][nowPoint.y-1]);
                 }else{
                     if(pointFromEnd[nowPoint.x][nowPoint.y-1].dist > nowPoint.dist+1){
@@ -167,18 +162,13 @@ public class crashMaze{
             }
         }
 
-        if(pointFromStart[0][numM-1].dist > minDist){
-            System.out.println(minDist);
-        }else {
-            System.out.println(pointFromStart[0][numM - 1].dist);
-        }
+        System.out.println(minDist);
     }
 }
 
 class Point{
     int x;
     int y;
-    int dist = 100;
+    int dist = 987987987;
     boolean visited=false;
-    boolean crash=true;
 }
